@@ -1,2 +1,2 @@
-![GitHub](https://img.shields.io/github/license/gorkemarslan/Django-Movie-Database)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 # Django-Movie-Database
