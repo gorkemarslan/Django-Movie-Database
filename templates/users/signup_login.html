@@ -1,7 +1,6 @@
 {% extends '_base.html' %}
 {% load static %}
 
-
 {% block title %}
     {% if 'login' in request.get_full_path %}
         Login
@@ -38,19 +37,27 @@
                             <div class="login">
                                 <form method="post">
                                     {% csrf_token %}
+                                    {% if login_form.non_field_errors %}
+                                        <div class="alert alert-error">
+                                            {% for error in login_form.non_field_errors %}
+                                                <p style="color: red">{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            {% if 'success' in message.tags %}
+                                                <h5 style="color: lawngreen">{{ message }}</h5>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
                                     <div class="group">
                                         <label for="id_username" class="label">Email Address</label>
                                         <input type="text" class="input" name="username" autofocus="" autocapitalize="none" autocomplete="email" maxlength="100" required="" id="id_username" placeholder="Enter your email address">
-                                        {% for error in login_form.username.errors %}
-                                            <p style="color: red">{{ error }}</p>
-                                        {% endfor %}
                                     </div>
                                     <div class="group">
                                         <label for="id_password" class="label">Password</label>
                                         <input type="password" class="input" name="password" autocomplete="current-password" required="" id="id_password" placeholder="Enter your password">
-                                        {% for error in login_form.password.errors %}
-                                            <p style="color: red">{{ error }}</p>
-                                        {% endfor %}
                                     </div>
                                     <div class="group">
                                         <input type="submit" name="login" class="button" value="Sign In">
@@ -62,6 +69,20 @@
                             <div class="sign-up-form">
                                 <form method="post">
                                     {% csrf_token %}
+                                     {% if signup_form.non_field_errors %}
+                                        <div class="alert alert-error">
+                                            {% for error in signup_form.non_field_errors %}
+                                                <h6 style="color: red">{{ error }}</h6>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+
+                                    {% for field in signup_form %}
+                                        {% for error in field.errors %}
+                                            <h6 style="color: red">{{ error }}</h6>
+                                        {% endfor %}
+                                    {% endfor %}
+
                                     <div class="group">
                                         <label for="id_email" class="label">Email Address</label>
                                         <input type="email" name="email" class="input" maxlength="100" autofocus="" required="" id="id_email" placeholder="Enter your email address">
