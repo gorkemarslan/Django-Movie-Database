@@ -14,10 +14,6 @@ $ python manage.py load_initial_data
 ```
 *(It might take a while.)*
 
-Execute the command below to load initiai Movie and Genre data:
-```
-$ python manage.py load_initial_data
-```
 
 Then, run the server:
 ```
