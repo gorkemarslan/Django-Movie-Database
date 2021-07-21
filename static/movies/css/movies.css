@@ -1,0 +1,12 @@
+.checked {
+  color: orange;
+}
+
+.rating{
+    user-select: none;
+}
+
+.star-btn {
+    background-color: inherit !important;
+    border: 0 !important;
+}

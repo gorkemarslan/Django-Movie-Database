@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views import generic
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -13,7 +13,7 @@ class HomePageView(generic.TemplateView):
 
 def signup_login_handler(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return HttpResponseRedirect(reverse_lazy('home'))
     else:
         if request.method == 'POST':
             signup_form = CustomUserCreationForm()
@@ -25,16 +25,12 @@ def signup_login_handler(request):
                     password = login_form.cleaned_data.get('password')
                     user = authenticate(username=email, password=password)
                     if user:
-                        if user.is_active:
-                            login(request, user)
-                            messages.info(request, f"You are now logged in as {email}.")
-                            return HttpResponseRedirect(reverse_lazy('home'))
-                        else:
-                            messages.error(request, "Your account was inactive.")
-                            return HttpResponseRedirect(reverse_lazy('login'))
-                    else:
-                        messages.error(request, "Invalid login details given.")
-                        return HttpResponseRedirect(reverse_lazy('login'))
+                        login(request, user)
+                        messages.info(request, f"You are now logged in as {email}.")
+                        return HttpResponseRedirect(reverse_lazy('home'))
+                    # else:
+                    #     messages.error(request, "Invalid login details given.")
+                    #     return HttpResponseRedirect(reverse_lazy('login'))
                 else:
                     messages.error(request, "Invalid login details given.")
                     return HttpResponseRedirect(reverse_lazy('login'))

@@ -25,6 +25,7 @@ urlpatterns = [
 
     # Local apps
     path('', include('users.urls')),
+    path('', include('movies.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

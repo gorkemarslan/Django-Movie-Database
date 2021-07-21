@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse, resolve
+from django.contrib.messages import get_messages
 from users.views import signup_login_handler
 
 
@@ -31,7 +32,7 @@ class SignupPageTests(TestCase):
             signup_login_handler.__name__
         )
 
-    def test_signup_page_redirects_logged_user_to_home_page(self):
+    def test_signup_page_redirects_authenticated_user_to_home_page(self):
         data = {'email': 'testuser@test.com',
                 'date_of_birth': "1990-01-01",
                 'country': 'TR',
@@ -44,6 +45,18 @@ class SignupPageTests(TestCase):
         self.assertRedirects(response, reverse('home'),
                              status_code=302, target_status_code=200, msg_prefix='',
                              fetch_redirect_response=True)
+
+    def test_sign_up_page_return_new_user(self):
+        user_count = get_user_model().objects.count()
+        data = {'email': 'testuser@test.com', 'date_of_birth': "1990-01-01", 'country': 'TR', 'gender': 'X',
+                'password1': 'superpass123?*', 'password2': 'superpass123?*', 'signup': ['Sign Up']}
+
+        response = self.client.post(reverse('signup'), data)
+        self.assertRedirects(response, reverse('login'),
+                             status_code=302, target_status_code=200, msg_prefix='',
+                             fetch_redirect_response=True)
+
+        self.assertEqual(get_user_model().objects.count(), user_count + 1)
 
 
 class LoginPageTests(TestCase):
@@ -62,9 +75,10 @@ class LoginPageTests(TestCase):
                 'date_of_birth': "1990-01-01",
                 'country': 'TR',
                 'gender': 'X',
-                'password': 'superpass123?*'}
+                'password': 'superpass123?*',
+                }
         User = get_user_model()
-        User.objects.create_user(**data)
+        self.user = User.objects.create_user(**data)
 
     def test_login_template(self):
         self.assertEqual(self.response.status_code, 200)
@@ -80,7 +94,7 @@ class LoginPageTests(TestCase):
             signup_login_handler.__name__
         )
 
-    def test_login_page_redirects_logged_user_to_home_page(self):
+    def test_login_page_redirects_authenticated_user_to_home_page(self):
 
         self.client.login(email=self.email, password=self.password1)
         response = self.client.get(reverse('login'))
@@ -89,12 +103,43 @@ class LoginPageTests(TestCase):
                              fetch_redirect_response=True)
 
     def test_login_view_redirect_on_success(self):
-
         self.client.logout()
-
         response = self.client.get(reverse('login'))
         self.assertEqual(response.status_code, 200)
-
-        self.assertTrue(self.client.login(username=self.email, password=self.password1))
-        response = self.client.post(reverse('login'))
+        response = self.client.post(reverse('login'),
+                                    {'username': self.email,
+                                     'password': self.password1,
+                                     'login': ['Sign In']})
+        self.assertTrue(self.client.login(email=self.email, password=self.password1))
         self.assertRedirects(response, expected_url=reverse('home'), status_code=302, target_status_code=200)
+
+    def test_unregistered_user_cannot_login(self):
+        self.client.logout()
+        response = self.client.get(reverse('login'))
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post(reverse('login'),
+                                    {'username': 'unregistered@mail.com',
+                                     'password': self.password1,
+                                     'login': ['Sign In']})
+        self.assertFalse(self.client.login(email='unregistered@mail.com', password=self.password1))
+        self.assertRedirects(response, expected_url=reverse('login'), status_code=302, target_status_code=200)
+
+    def test_user_for_is_inactive_cannot_login(self):
+        self.client.logout()
+        self.user.is_active = False
+        self.user.save()
+        response = self.client.post(reverse('login'),
+                                    {'username': self.email,
+                                     'password': self.password1,
+                                     'login': ['Sign In']})
+        self.assertRedirects(response, expected_url=reverse('login'), status_code=302, target_status_code=200)
+        self.assertFalse(self.client.login(email=self.email, password=self.password1))
+
+    def test_user_with_login_form_is_invalid(self):
+        self.client.logout()
+        response = self.client.get(reverse('login'))
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post(reverse('login'), {'username': self.email, 'login': ['Sign In']})
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertIn('Invalid login details given.', messages)
+        self.assertRedirects(response, expected_url=reverse('login'), status_code=302, target_status_code=200)
