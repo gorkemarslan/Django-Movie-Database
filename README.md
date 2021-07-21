@@ -9,10 +9,10 @@ $ python manage.py migrate
 ```
 
 Execute the command below to load initiai Movie and Genre data:
+*(It might take a while.)*
 ```
 $ python manage.py load_initial_data
 ```
-*(It might take a while.)*
 
 
 Then, run the server:
