@@ -10,3 +10,11 @@
     background-color: inherit !important;
     border: 0 !important;
 }
+
+.navbar-brand{
+    position: absolute;
+    top: 10px;
+}
+.navbar-home{
+    margin-left:80px
+}
