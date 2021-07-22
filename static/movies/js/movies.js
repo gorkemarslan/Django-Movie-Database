@@ -27,7 +27,7 @@ function deleteAllStars(stars, index, movie_id){
                data: {
                         "movie_id": movie_id,
                         "rating": index + 1,
-                        "delete": "True",
+                        "delete_rating": "True",
                       },
                dataType: 'json',
          });
@@ -71,7 +71,7 @@ for(i = 0; i<movie_ratings.length; i++){
                data: {
                         "movie_id": movie_id,
                         "rating": index + 1,
-                        "delete": "False",
+                        "delete_rating": "False",
                       },
                dataType: 'json',
          });
