@@ -14,16 +14,17 @@ class MovieListView(ListView):
     model = Movie
     paginate_by = 10
     context_object_name = 'movie_list'
+    template_name = 'movies/movie_list.html'
 
     def post(self, *args, **kwargs):
+        # Check AJAX requests
         is_ajax = self.request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
         if is_ajax:
             user_request = self.request.user
             movie_id_request = self.request.POST['movie_id']
             rating_request = int(self.request.POST['rating'])
-            delete_request = eval(self.request.POST['delete'])
-            User = get_user_model()
-            user = User.objects.get(email=user_request)
+            delete_request = eval(self.request.POST['delete_rating'])
+            user = get_user_model().objects.get(email=user_request)
             movie = Movie.objects.get(movie_id=movie_id_request)
             if not delete_request:
                 try:
@@ -81,9 +82,13 @@ class MovieListView(ListView):
 
 
 class MovieRecommendationView(TemplateView):
+
     template_name = "movies/movie_recommendation.html"
 
     def get_context_data(self, **kwargs):
         context = super(MovieRecommendationView, self).get_context_data(**kwargs)
-        context['recommendation_list'] = recommender(self.request.user)
+        # Recommendations are provided only to logged-in users.
+        if self.request.user.is_authenticated:
+            recommended_titles = recommender(self.request.user)
+            context['recommendation_list'] = [Movie.objects.filter(title=t).first() for t in recommended_titles]
         return context
