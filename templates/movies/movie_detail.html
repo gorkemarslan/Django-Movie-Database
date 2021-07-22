@@ -1,12 +1,56 @@
 {% extends '_base.html' %}
 {% block title %}{{ movie.title }}{% endblock title %}
 {% block content %}
-<div class="book-detail">
-    <img src="{{ poster_url }}" alt="">   
-<h2><a href="">{{ movie.title }}</a></h2>
-    <p>Year: {{ movie.year }}</p>
-    <p>Plot: {{ plot }}...</p>
-    <p>Director: {{ director }}</p>
-    <p>IMDb Rating: {{ imdb_rating }}</p>
+<br>
+<h1><a href="">{{ movie.title }}</a></h1>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <p>
+      {% if not 'N/A' in country %}
+        <strong>Country:</strong> {{ country }} &#8226;
+      {% endif %}
+      {% if not 'N/A' in run_time %}
+        {{ run_time }} &#8226;
+      {% endif %}
+        <strong>Year:</strong> {{ movie.year }}
+      </p>
+      <div>
+     <p>
+      {% for genre in movie.genre.all %}
+        {% if forloop.last %}
+            <a href="#">{{ genre }}</a>
+        {% else %}
+             <a href="#">{{ genre }}</a>,
+        {% endif %}
+      {% endfor %}
+      </p>
+      </div>
+      <br>
+      <h5>Plot:</h5>
+      {% if 'N/A' in plot %}
+         <p>{{ plot }}</p>
+      {% else %}
+        <p>{{ plot }}...</p>
+      {% endif %}
+      <h5>Director:</h5>
+      <p>{{ director }}</p>
+      <h5>Stars:</h5>
+      <p>{{ stars }}</p>
+      <h5>IMDb Rating:</h5>
+      <p>{{ imdb_rating }}</p>
+      </div>
+    <div class="col-4">
+      <img src="{{ poster_url }}" alt="">
+      <br>
+      {% if user.is_authenticated %}
+      <br>
+      <div class="text-center">
+         <h4>Your Rating:</h4>
+        {% include 'movies/star_rating.html' %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
 </div>
 {% endblock content %}

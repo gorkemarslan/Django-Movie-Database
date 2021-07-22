@@ -104,6 +104,9 @@ class MovieDetailView(DetailView):
         context['plot'] = json_response.get('Plot', 'N/A')
         context['imdb_rating'] = json_response.get('imdbRating', 'N/A')
         context['director'] = json_response.get('Director', 'N/A')
+        context['stars'] = json_response.get('Actors', 'N/A')
+        context['country'] = json_response.get('Country', 'N/A')
+        context['run_time'] = json_response.get('Runtime', 'N/A')
         context['poster_url'] = json_response.get('Poster')
         return context
 
