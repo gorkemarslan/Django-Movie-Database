@@ -43,42 +43,7 @@
               <td align="center">0</td>
               {% if user.is_authenticated %}
               <td nowrap="nowrap">
-                  <div id="{{ movie.movie_id }}">
-                  <div class="col-5 rating">
-                    <form class="rate-form" action="" method="POST">
-                        {% csrf_token %}
-                        {% if movie.user_rating.first.user_rating >= 1 %}
-                            <span class="fa fa-star fa-2x checked star-btn"></span>
-                        {% else %}
-                            <span class="fa fa-star fa-2x star-btn"></span>
-                        {% endif %}
-
-                        {% if movie.user_rating.first.user_rating >= 2 %}
-                            <span class="fa fa-star fa-2x checked star-btn"></span>
-                        {% else %}
-                            <span class="fa fa-star fa-2x star-btn"></span>
-                        {% endif %}
-
-                        {% if movie.user_rating.first.user_rating >= 3 %}
-                            <span type="submit" class="fa fa-star fa-2x checked star-btn"></span>
-                        {% else %}
-                            <span type="submit" class="fa fa-star fa-2x star-btn"></span>
-                        {% endif %}
-
-                        {% if movie.user_rating.first.user_rating >= 4 %}
-                            <span class="fa fa-star fa-2x checked star-btn"></span>
-                        {% else %}
-                            <span class="fa fa-star fa-2x star-btn"></span>
-                        {% endif %}
-
-                        {% if movie.user_rating.first.user_rating >= 5 %}
-                            <span class="fa fa-star fa-2x checked star-btn"></span>
-                        {% else %}
-                            <span class="fa fa-star fa-2x star-btn"></span>
-                        {% endif %}
-                    </form>
-                </div>
-              </div>
+                {% include 'movies/star_rating.html' %}
               </td>
               {% endif %}
             </tr>
