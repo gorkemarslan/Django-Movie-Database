@@ -1,17 +1,17 @@
 <div id="{{ movie.movie_id }}">
-  <div class="col-5 rating">
+  <div class="rating pointer">
     <form class="rate-form" action="" method="POST">
         {% csrf_token %}
         {% if movie.user_rating.first.user_rating >= 1 %}
-            <span class="fa fa-star fa-2x checked star-btn"></span>
+            <span type="submit" class="fa fa-star fa-2x checked star-btn"></span>
         {% else %}
-            <span class="fa fa-star fa-2x star-btn"></span>
+            <span type="submit" class="fa fa-star fa-2x star-btn"></span>
         {% endif %}
 
         {% if movie.user_rating.first.user_rating >= 2 %}
-            <span class="fa fa-star fa-2x checked star-btn"></span>
+            <span type="submit" class="fa fa-star fa-2x checked star-btn"></span>
         {% else %}
-            <span class="fa fa-star fa-2x star-btn"></span>
+            <span type="submit" class="fa fa-star fa-2x star-btn"></span>
         {% endif %}
 
         {% if movie.user_rating.first.user_rating >= 3 %}
@@ -21,15 +21,15 @@
         {% endif %}
 
         {% if movie.user_rating.first.user_rating >= 4 %}
-            <span class="fa fa-star fa-2x checked star-btn"></span>
+            <span type="submit" class="fa fa-star fa-2x checked star-btn"></span>
         {% else %}
-            <span class="fa fa-star fa-2x star-btn"></span>
+            <span type="submit" class="fa fa-star fa-2x star-btn"></span>
         {% endif %}
 
         {% if movie.user_rating.first.user_rating >= 5 %}
-            <span class="fa fa-star fa-2x checked star-btn"></span>
+            <span type="submit" class="fa fa-star fa-2x checked star-btn"></span>
         {% else %}
-            <span class="fa fa-star fa-2x star-btn"></span>
+            <span type="submit" class="fa fa-star fa-2x star-btn"></span>
         {% endif %}
     </form>
   </div>
