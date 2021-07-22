@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
+from django.views.generic.detail import DetailView
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import InvalidPage
@@ -79,6 +80,12 @@ class MovieListView(ListView):
                 'page_number': page_number,
                 'message': str(e)
             })
+
+
+class MovieDetailView(DetailView):
+    model = Movie
+    context_object_name = 'movie'
+    template_name = 'movies/movie_detail.html'
 
 
 class MovieRecommendationView(TemplateView):

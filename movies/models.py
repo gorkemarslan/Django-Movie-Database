@@ -1,6 +1,7 @@
 import datetime
 import uuid
 from django.db import models
+from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
@@ -27,6 +28,9 @@ class Movie(models.Model):
     number_of_rating = models.IntegerField(default=0)
     imdb_rating = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(10.0)], default=0)
     genre = models.ManyToManyField(to='movies.Genre', related_name='movies')
+
+    def get_absolute_url(self):
+        return reverse('movie_detail', args=[str(self.movie_id)])
 
     def __str__(self):
         return f'{self.title} ({self.year})'

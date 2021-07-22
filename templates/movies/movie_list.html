@@ -33,7 +33,7 @@
         <tbody>
           {% for movie in movie_list %}
             <tr>
-              <td><a href="#">{{ movie.title }}</a></td>
+              <td><a href="{{ movie.get_absolute_url }}">{{ movie.title }}</a></td>
               <td align="center">{{ movie.year }}</td>
               <td align="center">
                   {% for genre in movie.genre.all %}

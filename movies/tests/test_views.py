@@ -54,6 +54,26 @@ class MovieListViewTests(TestCase):
         self.assertFalse(UserRating.objects.exists())
 
 
+class MovieDetailViewTests(TestCase):
+    def setUp(self):
+        genre = Genre.objects.create(genre='Animation')
+        self.movie = Movie.objects.create(title='Toy Story', year=1995, imdb_rating=8.3)
+        self.movie.genre.add(genre)
+
+    def test_movie_detail_with_correct_url(self):
+        response = self.client.get(self.movie.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+
+    def test_movie_detail_with_incorrect_url(self):
+        response = self.client.get('/movies/123456/')
+        self.assertEqual(response.status_code, 404)
+
+    def test_movie_detail_view(self):
+        response = self.client.get(self.movie.get_absolute_url())
+        self.assertContains(response, 'Toy Story')
+        self.assertTemplateUsed(response, 'movies/movie_detail.html')
+
+
 class MovieRecommendationViewTests(TestCase):
 
     def setUp(self):
