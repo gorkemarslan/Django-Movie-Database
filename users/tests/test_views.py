@@ -6,7 +6,6 @@ from users.views import signup_login_handler
 
 
 class SignupPageTests(TestCase):
-
     email = 'testuser@test.com'
     date_of_birth = "1990-01-01"
     country = 'TR'
@@ -60,7 +59,6 @@ class SignupPageTests(TestCase):
 
 
 class LoginPageTests(TestCase):
-
     email = 'testuser@test.com'
     date_of_birth = "1990-01-01"
     country = 'TR'
@@ -95,7 +93,6 @@ class LoginPageTests(TestCase):
         )
 
     def test_login_page_redirects_authenticated_user_to_home_page(self):
-
         self.client.login(email=self.email, password=self.password1)
         response = self.client.get(reverse('login'))
         self.assertRedirects(response, reverse('home'),
@@ -143,3 +140,30 @@ class LoginPageTests(TestCase):
         messages = [m.message for m in get_messages(response.wsgi_request)]
         self.assertIn('Invalid login details given.', messages)
         self.assertRedirects(response, expected_url=reverse('login'), status_code=302, target_status_code=200)
+
+
+class AccountPageTests(TestCase):
+
+    def setUp(self):
+        self.url = reverse('account')
+        self.data = {'email': 'testuser@test.com',
+                     'date_of_birth': "1990-01-01",
+                     'country': 'TR',
+                     'gender': 'X',
+                     'password': 'superpass123?*',
+                     }
+        User = get_user_model()
+        self.user = User.objects.create_user(**self.data)
+
+    def test_account_page_only_authenticated_users_access(self):
+        self.client.logout()
+        self.client.login(email=self.data.get('email'), password=self.data.get('password'))
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'My Account')
+        self.assertTemplateUsed(response, 'users/account.html')
+
+    def test_account_page_unauthenticated_users_redirecting_to_home(self):
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertRedirects(response, expected_url=reverse('home'), status_code=302, target_status_code=200)

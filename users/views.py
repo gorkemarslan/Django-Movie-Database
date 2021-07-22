@@ -7,13 +7,18 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 
 
-class HomePageView(generic.TemplateView):
-    template_name = 'users/home.html'
+class AccountPageView(generic.TemplateView):
+    template_name = 'users/account.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/')
+        return super(AccountPageView, self).dispatch(request, *args, **kwargs)
 
 
 def signup_login_handler(request):
     """
-    Using FBV to handle two different form in a same page is more useful with than CBV
+    Using FBV to handle two different form in a same page is pretty convenient than using CBV
     """
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse_lazy('home'))
