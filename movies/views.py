@@ -1,3 +1,5 @@
+import requests
+from django.conf import settings
 from django.http import JsonResponse
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -90,6 +92,20 @@ class MovieDetailView(DetailView):
     model = Movie
     context_object_name = 'movie'
     template_name = 'movies/movie_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(MovieDetailView, self).get_context_data(**kwargs)
+        movie_id = self.object.movie_id
+        movie = Movie.objects.get(movie_id=movie_id)
+        omdb_request_raw = f'http://www.omdbapi.com/?apikey={settings.OMDB_API_KEY}&'
+        omdb_request = f'{omdb_request_raw}t={movie.title.replace(" ", "+")}&y={movie.year}'
+        response = requests.get(omdb_request)
+        json_response = response.json()
+        context['plot'] = json_response.get('Plot', 'N/A')
+        context['imdb_rating'] = json_response.get('imdbRating', 'N/A')
+        context['director'] = json_response.get('Director', 'N/A')
+        context['poster_url'] = json_response.get('Poster')
+        return context
 
 
 class MovieRecommendationView(TemplateView):

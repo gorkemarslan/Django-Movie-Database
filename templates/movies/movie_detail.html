@@ -2,6 +2,11 @@
 {% block title %}{{ movie.title }}{% endblock title %}
 {% block content %}
 <div class="book-detail">
-<h2><a href="">{{ movie.title }}</a></h2> <p>Year: {{ movie.year }}</p>
+    <img src="{{ poster_url }}" alt="">   
+<h2><a href="">{{ movie.title }}</a></h2>
+    <p>Year: {{ movie.year }}</p>
+    <p>Plot: {{ plot }}...</p>
+    <p>Director: {{ director }}</p>
+    <p>IMDb Rating: {{ imdb_rating }}</p>
 </div>
 {% endblock content %}
