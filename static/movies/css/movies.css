@@ -11,10 +11,33 @@
     border: 0 !important;
 }
 
+a:link {
+  color: black;
+}
+
+/* visited link */
+a:visited {
+  color: black;
+}
+
+/* mouse over link */
+a:hover {
+  color: #abb5bf;
+}
+
+/* selected link */
+a:active {
+  color: black;
+}
+
 .navbar-brand{
     position: absolute;
     top: 10px;
 }
 .navbar-home{
-    margin-left:80px
+    margin-left:100px
+}
+.nav-sep{
+  border-right: 1px solid rgba(255,255,255,.3);
+  margin-right: 10px;
 }

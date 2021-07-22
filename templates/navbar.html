@@ -12,7 +12,7 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <a class="navbar-brand navbar-left" href="{% url 'home' %}">
-            <img src="{% static 'movies/images/movie-it-logo.png' %}" width="64" height="64" alt="">
+            <img src="{% static 'movies/images/movie-it-logo.png' %}" width="80" height="80" alt="">
           </a>
         </li>
         <li class="nav-item navbar-home">
@@ -27,7 +27,9 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         {% if user.is_authenticated %}
-
+        <li class="nav-item nav-sep">
+          <a class="nav-link" href="{% url 'recommendation' %}">Recommendation</a>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ user.email }}
