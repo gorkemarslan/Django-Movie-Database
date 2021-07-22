@@ -16,7 +16,7 @@ class MovieListViewTests(TestCase):
                           'gender': 'X',
                           'password': 'superpass123?*'}
         self.user = get_user_model().objects.create_user(**self.user_data)
-        self.data = {'movie_id': self.movie.pk, 'rating': 5, 'delete': False}
+        self.data = {'movie_id': self.movie.pk, 'rating': 5, 'delete_rating': False}
 
     def test_a_user_can_rates_a_unrated_movie(self):
         self.client.login(email=self.user_data.get('email'), password=self.user_data.get('password'))
@@ -38,7 +38,7 @@ class MovieListViewTests(TestCase):
 
     def test_a_user_can_delete_rating_of_a_movie(self):
         UserRating.objects.create(user=self.user, movie=self.movie, user_rating=4)
-        rating_data = {'movie_id': self.movie.pk, 'rating': 4, 'delete': True}
+        rating_data = {'movie_id': self.movie.pk, 'rating': 4, 'delete_rating': True}
         self.client.login(email=self.user_data.get('email'), password=self.user_data.get('password'))
         response = self.client.post(self.url, rating_data,
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
