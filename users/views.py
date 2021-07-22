@@ -12,6 +12,9 @@ class HomePageView(generic.TemplateView):
 
 
 def signup_login_handler(request):
+    """
+    Using FBV to handle two different form in a same page is more useful with than CBV
+    """
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse_lazy('home'))
     else:

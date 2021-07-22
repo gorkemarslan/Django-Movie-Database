@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.views.generic.list import ListView
-from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
+from django.views.generic import TemplateView
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import InvalidPage
@@ -9,6 +9,10 @@ from django.http import Http404
 from django.utils.translation import gettext as _
 from .recommendation import recommender
 from .models import Movie, UserRating
+
+
+class HomePageView(TemplateView):
+    template_name = 'movies/home.html'
 
 
 class MovieListView(ListView):
