@@ -15,12 +15,15 @@
             <th>Year</th>
             <th>Genre</th>
             <th>Rating (avg)</th>
+            {% if user.is_authenticated %}
+                <th>Rate it!</th>
+            {% endif %}
           </tr>
         </thead>
         <tbody>
           {% for movie in recommendation_list %}
             <tr>
-              <td><a href="#">{{ movie.title }}</a></td>
+              <td><a href="{{ movie.get_absolute_url }}">{{ movie.title }}</a></td>
               <td align="center">{{ movie.year }}</td>
               <td align="center">
                   {% for genre in movie.genre.all %}
@@ -32,6 +35,11 @@
                   {% endfor %}
               </td>
               <td align="center">0</td>
+              {% if user.is_authenticated %}
+              <td nowrap="nowrap">
+                {% include 'movies/star_rating.html' %}
+              </td>
+              {% endif %}
             </tr>
           {% endfor %}
         </tbody>
