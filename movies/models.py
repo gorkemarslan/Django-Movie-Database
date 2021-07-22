@@ -16,6 +16,10 @@ def custom_year_validator(value):
 
 
 class Movie(models.Model):
+
+    class Meta:
+        ordering = ('movie_id',)
+
     movie_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=255)
     year = models.PositiveSmallIntegerField(validators=[custom_year_validator], blank=True)
