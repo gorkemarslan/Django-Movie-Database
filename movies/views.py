@@ -26,11 +26,6 @@ class MovieListView(ListView):
     def post(self, *args, **kwargs):
         return post_star_rating(self, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super(MovieListView, self).get_context_data(**kwargs)
-        context['user_rating'] = UserRating.objects.all()
-        return context
-
     def paginate_queryset(self, queryset, page_size):
         """Paginate the queryset, if needed."""
         paginator = self.get_paginator(

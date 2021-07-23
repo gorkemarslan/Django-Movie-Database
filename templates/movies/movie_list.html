@@ -1,5 +1,6 @@
 {% extends '_base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block statichead %}
 <!-- Custom CSS and JS -->
@@ -53,5 +54,4 @@
     </div>
     <br>
     {% include "movies/pagination.html" %}
-
 {% endblock content %}
