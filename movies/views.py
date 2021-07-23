@@ -24,35 +24,9 @@ class MovieListView(ListView):
     template_name = 'movies/movie_list.html'
 
     def post(self, *args, **kwargs):
-        # Check AJAX requests
-        is_ajax = self.request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
-        if is_ajax:
-            user_request = self.request.user
-            movie_id_request = self.request.POST['movie_id']
-            rating_request = int(self.request.POST['rating'])
-            delete_request = eval(self.request.POST['delete_rating'])
-            user = get_user_model().objects.get(email=user_request)
-            movie = Movie.objects.get(movie_id=movie_id_request)
-            if not delete_request:
-                try:
-                    user_rating_obj = UserRating.objects.get(user=user, movie=movie)
-                    user_rating_obj.user_rating = rating_request
-                    user_rating_obj.save()
-                except ObjectDoesNotExist:
-                    UserRating.objects.create(user=user, movie=movie, user_rating=rating_request)
-                except Exception:
-                    pass
-            else:
-                try:
-                    user_rating_obj = UserRating.objects.get(user=user, movie=movie, user_rating=rating_request)
-                    user_rating_obj.delete()
-                except Exception:
-                    pass
-            return JsonResponse({"success": True}, status=200)
+        return post_star_rating(self, *args, **kwargs)
 
-        return JsonResponse({"success": False}, status=400)
-
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super(MovieListView, self).get_context_data(**kwargs)
         context['user_rating'] = UserRating.objects.all()
         return context
@@ -80,7 +54,7 @@ class MovieListView(ListView):
             elif page_number <= 0:
                 page_number = 1
             page = paginator.page(page_number)
-            return (paginator, page, page.object_list, page.has_other_pages())
+            return paginator, page, page.object_list, page.has_other_pages()
         except InvalidPage as e:
             raise Http404(_('Invalid page (%(page_number)s): %(message)s') % {
                 'page_number': page_number,
@@ -115,10 +89,69 @@ class MovieRecommendationView(TemplateView):
 
     template_name = "movies/movie_recommendation.html"
 
+    def post(self, *args, **kwargs):
+        post_star_rating(self, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(MovieRecommendationView, self).get_context_data(**kwargs)
         # Recommendations are provided only to logged-in users.
         if self.request.user.is_authenticated:
-            recommended_titles = recommender(self.request.user)
-            context['recommendation_list'] = [Movie.objects.filter(title=t).first() for t in recommended_titles]
+            if UserRating.objects.filter(user=self.request.user):
+                recommended_titles = recommender(self.request.user)
+                context['recommendation_list'] = [Movie.objects.filter(title=t).first() for t in recommended_titles]
+            else:
+                context['recommendation_list'] = Movie.objects.all()[:10]
         return context
+
+
+class UserStarsListView(ListView):
+    paginate_by = 50
+    context_object_name = 'user_stars_list'
+    template_name = 'movies/user_stars_list.html'
+
+    def post(self, *args, **kwargs):
+        return post_star_rating(self, *args, **kwargs)
+
+    def get_queryset(self):
+        """
+        Returns movie by following traversal relationship through:
+        user -> user_rating -> movie
+        """
+        return Movie.objects.filter(user_rating__user=self.request.user)
+
+
+def post_star_rating(obj, *args, **kwargs):
+    """
+    A function to handle star ratings in ListViews
+    Example usage in a ListView:
+    .. code-block:: python
+        def post(self, *args, **kwargs):
+            return post_star_rating(self, *args, **kwargs)
+    """
+    # Check AJAX requests
+    is_ajax = obj.request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+    if is_ajax:
+        user_request = obj.request.user
+        movie_id_request = obj.request.POST['movie_id']
+        rating_request = int(obj.request.POST['rating'])
+        delete_request = eval(obj.request.POST['delete_rating'])
+        user = get_user_model().objects.get(email=user_request)
+        movie = Movie.objects.get(movie_id=movie_id_request)
+        if not delete_request:
+            try:
+                user_rating_obj = UserRating.objects.get(user=user, movie=movie)
+                user_rating_obj.user_rating = rating_request
+                user_rating_obj.save()
+            except ObjectDoesNotExist:
+                UserRating.objects.create(user=user, movie=movie, user_rating=rating_request)
+            except Exception:
+                pass
+        else:
+            try:
+                user_rating_obj = UserRating.objects.get(user=user, movie=movie, user_rating=rating_request)
+                user_rating_obj.delete()
+            except Exception:
+                pass
+        return JsonResponse({"success": True}, status=200)
+
+    return JsonResponse({"success": False}, status=400)

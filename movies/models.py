@@ -41,7 +41,7 @@ RATING_CHOICES = [(i, i) for i in range(1, 6)]
 
 class UserRating(models.Model):
     user_rating = models.IntegerField(choices=RATING_CHOICES, default=None)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='user_rating2')
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='user_rating')
 
     def __str__(self):
