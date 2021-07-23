@@ -1,3 +1,11 @@
+body,
+button,
+input,
+select,
+textarea {
+    font-family: "IBM Plex Sans", sans-serif;
+}
+
 .checked {
   color: orange;
 }
@@ -22,7 +30,7 @@ a:visited {
 
 /* mouse over link */
 a:hover {
-  color: #abb5bf;
+  color: #737373;
 }
 
 /* selected link */
