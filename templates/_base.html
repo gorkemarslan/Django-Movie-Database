@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Custom CSS and JS -->
+    <link rel="stylesheet" href="{% static 'movies/css/movies.css' %}">
+    <script src="{% static 'movies/js/movies.js' %}" defer></script>
     {% block statichead %}{% endblock statichead %}
 </head>
 <body>
