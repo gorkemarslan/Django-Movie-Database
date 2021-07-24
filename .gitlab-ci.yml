@@ -19,8 +19,6 @@ before_script:
   - export WEB_IMAGE=$IMAGE:web
   - export NGINX_IMAGE=$IMAGE:nginx
   - apk add --no-cache openssh-client bash
-  - chmod +x ./setup_env.sh
-  - bash ./setup_env.sh
   - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
 
 test:
