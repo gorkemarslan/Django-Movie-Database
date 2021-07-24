@@ -16,7 +16,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:10.8
+        image: postgres:12.5
         env:
           POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
