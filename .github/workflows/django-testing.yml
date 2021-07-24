@@ -52,6 +52,7 @@ jobs:
         POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
         POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+        ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
       run: |
         pip install coverage
         coverage run manage.py test
@@ -66,5 +67,6 @@ jobs:
         POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
         POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+        ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
       run: |
         python manage.py test
