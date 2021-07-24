@@ -1,5 +1,5 @@
 image:
-  name: docker/compose:1.25.5
+  name: docker/compose:1.25.4
   entrypoint: [""]
 
 services:
@@ -7,24 +7,42 @@ services:
 
 stages:
   - build
+  - deploy
 
 variables:
   DOCKER_HOST: tcp://docker:2375
   DOCKER_DRIVER: overlay2
 
+before_script:
+  - export IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+  - export WEB_IMAGE=$IMAGE:web
+  - export NGINX_IMAGE=$IMAGE:nginx
+  - apk add --no-cache openssh-client bash
+  - chmod +x ./setup_env.sh
+  - bash ./setup_env.sh
+  - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
+
 build:
   stage: build
-  before_script:
-    - export IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
-    - export WEB_IMAGE=$IMAGE:web
-    - export NGINX_IMAGE=$IMAGE:nginx
   script:
-    - apk add --no-cache bash
-    - chmod +x ./setup_env.sh
-    - bash ./setup_env.sh
-    - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker pull $IMAGE:web || true
     - docker pull $IMAGE:nginx || true
     - docker-compose -f docker-compose.ci.yml build
     - docker push $IMAGE:web
     - docker push $IMAGE:nginx
+
+deploy:
+  stage: deploy
+  script:
+    - mkdir -p ~/.ssh
+    - echo "$PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - cat ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
+    - chmod +x ./deploy.sh
+    - scp  -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.yml ec2-user@$EC2_PUBLIC_IP_ADDRESS:/home/ec2-user/code
+    - bash ./deploy.sh
+  only:
+    - master
