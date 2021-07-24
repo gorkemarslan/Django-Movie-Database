@@ -33,27 +33,27 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Coverage report
       env:
-        DEBUG: ${{ env.DEBUG }}
-        SECRET_KEY: ${{ env.SECRET_KEY }}
-        OMDB_API_KEY: ${{ env.OMDB_API_KEY }}
-        POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
-        POSTGRES_DB: ${{ env.POSTGRES_DB }}
-        POSTGRES_USER: ${{ env.POSTGRES_USER }}
-        POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-        POSTGRES_PORT: ${{ env.POSTGRES_PORT }}
+        DEBUG: ${{ secrets.DEBUG }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
+        POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
       run: |
         pip install coverage
         coverage run manage.py test
         coverage report
     - name: Django Testing
       env:
-        DEBUG: ${{ env.DEBUG }}
-        SECRET_KEY: ${{ env.SECRET_KEY }}
-        OMDB_API_KEY: ${{ env.OMDB_API_KEY }}
-        POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
-        POSTGRES_DB: ${{ env.POSTGRES_DB }}
-        POSTGRES_USER: ${{ env.POSTGRES_USER }}
-        POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-        POSTGRES_PORT: ${{ env.POSTGRES_PORT }}
+        DEBUG: ${{ secrets.DEBUG }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
+        POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
       run: |
         python manage.py test
