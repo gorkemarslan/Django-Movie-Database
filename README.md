@@ -13,7 +13,7 @@ Execute the command below to load initiai Movie and Genre data:
 ```
 $ python manage.py load_initial_data
 ```
-
+There are 9742 movies, 18 genres. The command above loads entire data to the project.
 
 Then, run the server:
 ```
