@@ -33,12 +33,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
-print(env('DEBUG'))
-print(env('POSTGRES_DB'))
-print(env('POSTGRES_USER'))
-print(env('POSTGRES_PASSWORD'))
-print(env('POSTGRES_HOST'))
-print(env('POSTGRES_PORT'))
+
 
 ALLOWED_HOSTS = []
 
