@@ -5,9 +5,9 @@ python:
 
 services:
   - docker
+  - postgresql
 
 before_install:
-  - printenv
   - touch ./DjangoMovieDatabase/.env
   - echo DEBUG="$DEBUG" >> ./DjangoMovieDatabase/.env
   - echo SECRET_KEY="$SECRET_KEY" >> ./DjangoMovieDatabase/.env
@@ -18,6 +18,7 @@ before_install:
   - echo POSTGRES_PASSWORD="$POSTGRES_PASSWORD" >> ./DjangoMovieDatabase/.env
   - echo ALLOWED_HOSTS="$ALLOWED_HOSTS" >> ./DjangoMovieDatabase/.env
   - cat ./DjangoMovieDatabase/.env
+  - sleep 5
   - docker-compose up -d --build
   - docker ps
   - docker-compose logs
