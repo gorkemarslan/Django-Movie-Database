@@ -19,8 +19,9 @@ before_install:
   - echo ALLOWED_HOSTS="$ALLOWED_HOSTS" >> ./DjangoMovieDatabase/.env
   - cat ./DjangoMovieDatabase/.env
   - docker-compose up -d --build db
-  - sleep 5
+  - sleep 15
   - docker-compose up -d --build web
+  - sleep 5
   - docker ps
   - docker-compose logs
 
