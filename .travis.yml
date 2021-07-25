@@ -9,17 +9,17 @@ services:
 before_install:
   - printenv
   - touch ./DjangoMovieDatabase/.env
+  - echo DEBUG="$DEBUG" >> ./DjangoMovieDatabase/.env
+  - echo SECRET_KEY="$SECRET_KEY" >> ./DjangoMovieDatabase/.env
+  - echo OMDB_API_KEY="$OMDB_API_KEY" >> ./DjangoMovieDatabase/.env
+  - echo POSTGRES_HOST="$POSTGRES_HOST" >> ./DjangoMovieDatabase/.env
+  - echo POSTGRES_DB="$POSTGRES_DB" >> ./DjangoMovieDatabase/.env
+  - echo POSTGRES_USER="$POSTGRES_USER" >> ./DjangoMovieDatabase/.env
+  - echo POSTGRES_PASSWORD="$POSTGRES_PASSWORD" >> ./DjangoMovieDatabase/.env
+  - echo ALLOWED_HOSTS="$ALLOWED_HOSTS" >> ./DjangoMovieDatabase/.env
+  - cat ./DjangoMovieDatabase/.env
   - docker-compose up -d --build
   - docker ps
-  - echo "$DEBUG" > ./DjangoMovieDatabase/.env
-  - echo "$SECRET_KEY" > ./DjangoMovieDatabase/.env
-  - echo "$OMDB_API_KEY" > ./DjangoMovieDatabase/.env
-  - echo "$POSTGRES_HOST" > ./DjangoMovieDatabase/.env
-  - echo "$POSTGRES_DB" > ./DjangoMovieDatabase/.env
-  - echo "$POSTGRES_USER" > ./DjangoMovieDatabase/.env
-  - echo "$POSTGRES_PASSWORD" > ./DjangoMovieDatabase/.env
-  - echo "$ALLOWED_HOSTS" > ./DjangoMovieDatabase/.env
-  - cat ./DjangoMovieDatabase/.env
   - docker-compose logs
 
 script:
