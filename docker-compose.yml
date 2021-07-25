@@ -3,7 +3,7 @@ version: "3.6"
 services:
   web:
     build: .
-    command: python /code/manage.py runserver 0.0.0.0:8000
+    command: python /code/manage.py runserver 0.0.0.0:80
     # command: gunicorn DjangoMovieDatabase.wsgi -b 0.0.0.0:8000
     volumes:
       - .:/code
