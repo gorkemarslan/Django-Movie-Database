@@ -10,6 +10,10 @@ from users.models import CustomUser
 
 
 def custom_year_validator(value):
+    """
+    Check whether year of a movie is valid.
+    It starts with the history of cinema, ends with the current year.
+    """
     if value < 1888 or value > datetime.datetime.now().year:
         raise ValidationError(
             _('%(value)s is not a correct year!'),
@@ -31,14 +35,21 @@ class Movie(models.Model):
     genre = models.ManyToManyField(to='movies.Genre', related_name='movies')
 
     def get_average_rating(self):
+        """
+        Get average rating of a movie given by all users.
+        """
         avg_rating_dict = UserRating.objects.filter(movie=self).aggregate(rating_avg=Avg('user_rating'))
         # If a movie has not rated yet, it returned None from the line above.
-        # Check it, if it is None, return 0.
+        # Check the result, if it is None, return 0.
         if avg_rating_dict['rating_avg']:
             return f"{avg_rating_dict['rating_avg']:.1f}"
         return "0.0"
 
     def get_absolute_url(self):
+        """
+        Get absolute url for each movie.
+        The function is particularly used for MovieDetailView and the movie page itself.
+        """
         return reverse('movie_detail', args=[str(self.movie_id)])
 
     def __str__(self):
