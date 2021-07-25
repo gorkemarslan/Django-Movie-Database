@@ -7,10 +7,7 @@ services:
   - docker
 
 before_install:
-  - pwd
-  - ls
-  - ls -a ./Django-Movie-Database/
-  - touch ./Django-Movie-Database/.env
+  - touch ./DjangoMovieDatabase/.env
   - docker-compose up -d --build
 
 script:
