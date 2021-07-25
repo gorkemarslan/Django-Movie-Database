@@ -19,6 +19,8 @@ services:
   - postgresql
 
 before_script:
+  - pip install -r requirements.txt
+  - pip install flake8
   - psql -c 'create database "$POSTGRES_DB";' -U postgres
 
 script:
