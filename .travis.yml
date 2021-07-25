@@ -11,6 +11,15 @@ before_install:
   - touch ./DjangoMovieDatabase/.env
   - docker-compose up -d --build
   - docker ps
+  - echo "$DEBUG" > ./DjangoMovieDatabase/.env
+  - echo "$SECRET_KEY" > ./DjangoMovieDatabase/.env
+  - echo "$OMDB_API_KEY" > ./DjangoMovieDatabase/.env
+  - echo "$POSTGRES_HOST" > ./DjangoMovieDatabase/.env
+  - echo "$POSTGRES_DB" > ./DjangoMovieDatabase/.env
+  - echo "$POSTGRES_USER" > ./DjangoMovieDatabase/.env
+  - echo "$POSTGRES_PASSWORD" > ./DjangoMovieDatabase/.env
+  - echo "$ALLOWED_HOSTS" > ./DjangoMovieDatabase/.env
+  - cat ./DjangoMovieDatabase/.env
   - docker-compose logs
 
 script:
