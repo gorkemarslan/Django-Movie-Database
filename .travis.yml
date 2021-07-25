@@ -18,8 +18,9 @@ before_install:
   - echo POSTGRES_PASSWORD="$POSTGRES_PASSWORD" >> ./DjangoMovieDatabase/.env
   - echo ALLOWED_HOSTS="$ALLOWED_HOSTS" >> ./DjangoMovieDatabase/.env
   - cat ./DjangoMovieDatabase/.env
+  - docker-compose up -d --build db
   - sleep 5
-  - docker-compose up -d --build
+  - docker-compose up -d --build web
   - docker ps
   - docker-compose logs
 
