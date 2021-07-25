@@ -147,6 +147,9 @@ def post_star_rating(obj, *args, **kwargs):
                 user_rating_obj.delete()
             except Exception:
                 pass
-        return JsonResponse({"success": True}, status=200)
+        return JsonResponse({"success": True,
+                             "rating_average": movie.get_average_rating(),
+                             "rating_count": movie.user_rating.count()},
+                            status=200)
 
     return JsonResponse({"success": False}, status=400)

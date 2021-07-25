@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+from django.db.models import Avg
 from users.models import CustomUser
 
 
@@ -28,6 +29,14 @@ class Movie(models.Model):
     number_of_rating = models.IntegerField(default=0)
     imdb_rating = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(10.0)], default=0)
     genre = models.ManyToManyField(to='movies.Genre', related_name='movies')
+
+    def get_average_rating(self):
+        avg_rating_dict = UserRating.objects.filter(movie=self).aggregate(rating_avg=Avg('user_rating'))
+        # If a movie has not rated yet, it returned None from the line above.
+        # Check it, if it is None, return 0.
+        if avg_rating_dict['rating_avg']:
+            return f"{avg_rating_dict['rating_avg']:.1f}"
+        return "0.0"
 
     def get_absolute_url(self):
         return reverse('movie_detail', args=[str(self.movie_id)])

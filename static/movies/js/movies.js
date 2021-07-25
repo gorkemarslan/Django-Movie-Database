@@ -30,6 +30,15 @@ function deleteAllStars(stars, index, movie_id){
                         "delete_rating": "True",
                       },
                dataType: 'json',
+               success: function(response){
+                    id = ".id" + movie_id
+                    average_selector = id + " .rating-average"
+                    count_selector = id + " .rating-count"
+                    var average_element = document.querySelector(average_selector)
+                    var count_element = document.querySelector(count_selector)
+                    average_element.innerHTML = response["rating_average"]
+                    count_element.innerHTML = "(" + response["rating_count"] + ")"
+               },
          });
 }
 
@@ -74,6 +83,15 @@ for(i = 0; i<movie_ratings.length; i++){
                         "delete_rating": "False",
                       },
                dataType: 'json',
+               success: function(response){
+                    id = ".id" + movie_id
+                    average_selector = id + " .rating-average"
+                    count_selector = id + " .rating-count"
+                    var average_element = document.querySelector(average_selector)
+                    var count_element = document.querySelector(count_selector)
+                    average_element.innerHTML = response["rating_average"]
+                    count_element.innerHTML = "(" + response["rating_count"] + ")"
+               },
          });
       }
     }

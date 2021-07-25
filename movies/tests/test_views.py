@@ -32,7 +32,8 @@ class MovieListViewTests(TestCase):
         response = self.client.post(self.url, self.data,
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), {'success': True})
+        response_json = response.json()
+        self.assertTrue(response_json.get('success'))
         self.assertEqual(UserRating.objects.count(), 1)
         self.assertEqual(UserRating.objects.first().user_rating, 5)
 
@@ -43,7 +44,8 @@ class MovieListViewTests(TestCase):
         response = self.client.post(self.url, rating_data,
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), {'success': True})
+        response_json = response.json()
+        self.assertTrue(response_json.get('success'))
         self.assertFalse(UserRating.objects.exists())
 
     def test_invalid_post_request(self):
