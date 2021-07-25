@@ -3,7 +3,6 @@ language: python
 python:
   - "3.9"
 
-
 before_install:
   - touch ./DjangoMovieDatabase/.env
   - echo DEBUG="$DEBUG" >> ./DjangoMovieDatabase/.env
@@ -17,17 +16,12 @@ before_install:
   - cat ./DjangoMovieDatabase/.env
 
 services:
-  - docker
+  - postgresql
+
+before_script:
+  - psql -c 'create database "$POSTGRES_DB";' -U postgres
 
 script:
-  - docker-compose up -d --build
-  - sleep 1
-  - sleep 1
-  - sleep 1
-  - sleep 1
-  - sleep 1
-  - docker ps
-  - docker-compose logs
-  - docker-compose exec web python manage.py migrate
-  - docker-compose exec web python manage.py makemigrations
-  - docker-compose exec web python manage.py test && flake8
+  - python manage.py migrate
+  - python manage.py makemigrations
+  - python manage.py test && flake8
