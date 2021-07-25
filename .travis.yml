@@ -3,15 +3,6 @@ language: python
 python:
   - "3.9"
 
-services:
-  - docker
-  - postgresql
-
-before_script:
-  - psql --version
-  - psql -c 'CREATE DATABASE postgres;' -U postgres
-  - psql -c 'CREATE ROLE travis SUPERUSER LOGIN CREATEDB;' -U postgres
-  - cp config/database.yml.travis config/database.yml
 
 before_install:
   - touch ./DjangoMovieDatabase/.env
@@ -24,14 +15,16 @@ before_install:
   - echo POSTGRES_PASSWORD="$POSTGRES_PASSWORD" >> ./DjangoMovieDatabase/.env
   - echo ALLOWED_HOSTS="$ALLOWED_HOSTS" >> ./DjangoMovieDatabase/.env
   - cat ./DjangoMovieDatabase/.env
-  - docker-compose up -d --build db
-  - sleep 15
-  - docker-compose up -d --build web
+
+services:
+  - docker
+  - postgresql
+
+script:
+  - docker-compose up -d --build
   - sleep 5
   - docker ps
   - docker-compose logs
-
-script:
   - docker-compose exec web python manage.py migrate
   - docker-compose exec web python manage.py makemigrations
   - docker-compose exec web python manage.py test && flake8
