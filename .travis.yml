@@ -18,7 +18,6 @@ before_install:
 
 services:
   - docker
-  - postgresql
 
 script:
   - docker-compose up -d --build
