@@ -21,7 +21,11 @@ services:
 
 script:
   - docker-compose up -d --build
-  - sleep 5
+  - sleep 1
+  - sleep 1
+  - sleep 1
+  - sleep 1
+  - sleep 1
   - docker ps
   - docker-compose logs
   - docker-compose exec web python manage.py migrate
