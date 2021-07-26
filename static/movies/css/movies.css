@@ -49,3 +49,33 @@ a:active {
   border-right: 1px solid rgba(255,255,255,.3);
   margin-right: 10px;
 }
+
+.navbar-signup-btn{
+    background-color: #7dc22b;
+    border-color: #7dc22b;
+}
+.navbar-signup-btn:hover {
+	background-color: transparent;
+	color: #7dc22b;
+	border-color: #7dc22b;
+	text-decoration: none;
+}
+
+.navbar-login-btn{
+    background-color: transparent;
+	border-color: #ffffff;
+	color: #ffffff !important;
+}
+
+.navbar-login-btn:hover {
+	background-color: #353a40;
+	color: #7dc22b !important;
+	border-color: #7dc22b;
+	text-decoration: none;
+}
+
+github-icon.{
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;
+}

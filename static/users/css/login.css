@@ -11,9 +11,6 @@ body {
     max-width: 525px;
     min-height: 870px;
     position: relative;
-    /*
-    background: url(https://images.unsplash.com/photo-1507208773393-40d9fc670acf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1268&q=80) no-repeat center;
-    */
     background: url(https://images.unsplash.com/photo-1478479405421-ce83c92fb3ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80) no-repeat center;
 
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19)
@@ -27,17 +24,6 @@ body {
     background: rgba(0, 77, 77, .6)
 }
 
-.login-snip .login,
-.login-snip .sign-up-form {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: absolute;
-    transform: rotateY(180deg);
-    backface-visibility: hidden;
-    transition: all .4s linear
-}
 
 .login-snip .sign-in,
 .login-snip .sign-up,
@@ -128,18 +114,6 @@ select,
     transition: all .2s ease-in-out 0s
 }
 
-.login-space .group label .icon:before {
-    left: 3px;
-    width: 5px;
-    bottom: 6px;
-    transform: scale(0) rotate(0)
-}
-
-.login-space .group label .icon:after {
-    top: 6px;
-    right: 0;
-    transform: scale(0) rotate(0)
-}
 
 .login-space .group .check:checked+label {
     color: #fff
@@ -149,20 +123,50 @@ select,
     background: #1161ee
 }
 
-.login-space .group .check:checked+label .icon:before {
+
+#image img {
+    width:375px;
+}
+@media screen and (min-width: 1366px) {
+    .login-snip .login,
+    .login-snip .sign-up-form {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        transform: rotateY(180deg);
+        backface-visibility: hidden;
+        transition: all .4s linear
+    }
+    .login-space .group label .icon:before {
+        left: 3px;
+        width: 5px;
+        bottom: 6px;
+        transform: scale(0) rotate(0)
+    }
+
+    .login-space .group label .icon:after {
+        top: 6px;
+        right: 0;
+        transform: scale(0) rotate(0)
+    }
+
+   .login-space .group .check:checked+label .icon:before {
     transform: scale(1) rotate(45deg)
-}
+    }
 
-.login-space .group .check:checked+label .icon:after {
-    transform: scale(1) rotate(-45deg)
-}
+    .login-space .group .check:checked+label .icon:after {
+        transform: scale(1) rotate(-45deg)
+    }
 
-.login-snip .sign-in:checked+.tab+.sign-up+.tab+.login-space .login {
-    transform: rotate(0)
-}
+    .login-snip .sign-in:checked+.tab+.sign-up+.tab+.login-space .login {
+        transform: rotate(0)
+    }
 
-.login-snip .sign-up:checked+.tab+.login-space .sign-up-form {
-    transform: rotate(0)
+    .login-snip .sign-up:checked+.tab+.login-space .sign-up-form {
+        transform: rotate(0)
+    }
 }
 
 *,

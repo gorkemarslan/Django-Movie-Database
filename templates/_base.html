@@ -13,19 +13,21 @@
     <!-- Custom CSS and JS -->
     <link rel="stylesheet" href="{% static 'movies/css/movies.css' %}">
     <script src="{% static 'movies/js/movies.js' %}" defer></script>
-    {% block statichead %}{% endblock statichead %}
-    <!-- Custom CSS and JS -->
+    {% block statichead %}
+    {% endblock statichead %}
 </head>
 <body>
     {% block navbar %}
         {% include 'navbar.html' %}
+        <br>
+        <br>
     {% endblock navbar %}
-    <br>
-    <br>
     <div class="container">
         {% block content %}
         {% endblock content %}
     </div>
+    {% block homepage %}
+    {% endblock homepage %}
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
