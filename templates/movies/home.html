@@ -1,26 +1,36 @@
 {% extends '_base.html' %}
 {% load static %}
 
-
 {% block title %}Django Movie Database{% endblock title %}
 
 {% block statichead %}
-<!-- Custom CSS and JS -->
-<link rel="stylesheet" href="{% static 'movies/css/home.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+	<link href="{% static 'movies/css/styles.css' %}" rel="stylesheet">
 {% endblock statichead %}
 
+{% block navbar %}
+    {% include 'navbar.html' %}
+{% endblock navbar %}
 
-{% block content %}
-    <section class="hero">
-        <div class="hero-copy">
-            <h1 class="hero-title mt-0">Movie-It</h1>
-            <p class="hero-paragraph">You Rate. We Recommend.</p>
-            <div class="hero-cta">
-                <a class="button button-primary" href="{% url 'movie_list' %}">Movies</a>
-                <a class="button" href="#">About</a>
+{% block homepage %}
+<div class="top-div">
+
+    <header id="header" class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1 class="h1-large">YOU RATE<br> WE<br>RECOMMEND</h1>
+                </div>
+                <div class="col-lg-6">
+                    <div class="button-container">
+                        <a class="btn-solid-lg" href="#intro">Movies</a>
+                        <a class="btn-outline-lg" href="#contact">About</a>
+
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
-{% endblock content %}
-
-
+    </header>
+    </div>
+{% endblock homepage %}
