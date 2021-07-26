@@ -117,7 +117,7 @@ class UserStarsListView(ListView):
 
 def post_star_rating(obj, *args, **kwargs):
     """
-    A function to handle star ratings in ListViews
+    The function to handle star ratings in ListViews
     Example usage in a ListView:
     .. code-block:: python
         def post(self, *args, **kwargs):
@@ -126,6 +126,7 @@ def post_star_rating(obj, *args, **kwargs):
     # Check AJAX requests
     is_ajax = obj.request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
     if is_ajax:
+        # Get data from the POST request
         user_request = obj.request.user
         movie_id_request = obj.request.POST['movie_id']
         rating_request = int(obj.request.POST['rating'])

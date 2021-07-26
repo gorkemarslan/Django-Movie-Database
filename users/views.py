@@ -20,6 +20,8 @@ def signup_login_handler(request):
     """
     Using FBV to handle two different form in a same page is pretty convenient than using CBV
     """
+    # Only anonymous users are able to access the login and signup pages.
+    # If a user is authenticated, then redirects the user to the home page.
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse_lazy('home'))
     else:
