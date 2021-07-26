@@ -127,7 +127,8 @@ select,
 #image img {
     width:375px;
 }
-@media screen and (min-width: 1366px) {
+
+@media only screen{
     .login-snip .login,
     .login-snip .sign-up-form {
         top: 0;
