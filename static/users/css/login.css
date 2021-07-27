@@ -56,7 +56,12 @@ body {
     min-height: 345px;
     position: relative;
     perspective: 1000px;
-    transform-style: preserve-3d
+
+    -webkit-transform-style: preserve-3d     /* Chrome and other webkit browsers */
+    -moz-transform-style: preserve-3d        /* FF */
+    -o-transform-style: preserve-3d          /* Opera */
+    -ms-transform-style: preserve-3d       /* IE9 */
+    transform-style: preserve-3d;       /* W3C compliant browsers */
 }
 
 .login-space .group {
@@ -111,7 +116,12 @@ select,
     height: 2px;
     background: #fff;
     position: absolute;
-    transition: all .2s ease-in-out 0s
+
+    -webkit-transition: all .2s ease-in-out 0s;     /* Chrome and other webkit browsers */
+    -moz-transition: all .2s ease-in-out 0s;        /* FF */
+    -o-transition: all .2s ease-in-out 0s;         /* Opera */
+    -ms-transition: all .2s ease-in-out 0s;       /* IE9 */
+    transition: all .2s ease-in-out 0s;       /* W3C compliant browsers */
 }
 
 
@@ -136,37 +146,78 @@ select,
         right: 0;
         bottom: 0;
         position: absolute;
-        transform: rotateY(180deg);
-        backface-visibility: hidden;
-        transition: all .4s linear
+        -webkit-transform: rotateY(180deg);     /* Chrome and other webkit browsers */
+        -moz-transform: rotateY(180deg);        /* FF */
+        -o-transform: rotateY(180deg);          /* Opera */
+        -ms-transform: rotateY(180deg);       /* IE9 */
+        transform: rotateY(180deg);       /* W3C compliant browsers */
+
+        -webkit-backface-visibility: hidden;     /* Chrome and other webkit browsers */
+        -moz-backface-visibility: hidden;        /* FF */
+        -o-backface-visibility: hidden;          /* Opera */
+        -ms-backface-visibility: hidden;       /* IE9 */
+        backface-visibility: hidden;       /* W3C compliant browsers */
+
+
+        -webkit-transition: all .4s linear;     /* Chrome and other webkit browsers */
+        -moz-transition: all .4s linear;        /* FF */
+        -o-transition: all .4s linear;          /* Opera */
+        -ms-transition: all .4s linear;       /* IE9 */
+         transition: all .4s linear;       /* W3C compliant browsers */
     }
     .login-space .group label .icon:before {
         left: 3px;
         width: 5px;
         bottom: 6px;
-        transform: scale(0) rotate(0)
+
+        -webkit-transform: scale(0) rotate(0);      /* Chrome and other webkit browsers */
+        -moz-transform: scale(0) rotate(0);          /* FF */
+        -o-transform: scale(0) rotate(0);            /* Opera */
+        -ms-transform: scale(0) rotate(0);         /* IE9 */
+        transform: scale(0) rotate(0);      /* W3C compliant browsers */
     }
 
     .login-space .group label .icon:after {
         top: 6px;
         right: 0;
-        transform: scale(0) rotate(0)
+
+        -webkit-transform: scale(0) rotate(0);      /* Chrome and other webkit browsers */
+        -moz-transform: scale(0) rotate(0);          /* FF */
+        -o-transform: scale(0) rotate(0);            /* Opera */
+        -ms-transform: scale(0) rotate(0);         /* IE9 */
+        transform: scale(0) rotate(0)     /* W3C compliant browsers */
     }
 
    .login-space .group .check:checked+label .icon:before {
-    transform: scale(1) rotate(45deg)
+        -webkit-transform: scale(1) rotate(45deg);      /* Chrome and other webkit browsers */
+        -moz-transform: scale(1) rotate(45deg);         /* FF */
+        -o-transform: scale(1) rotate(45deg);        /* Opera */
+        -ms-transform: scale(1) rotate(45deg);        /* IE9 */
+        transform: scale(1) rotate(45deg);     /* W3C compliant browsers */
     }
 
     .login-space .group .check:checked+label .icon:after {
-        transform: scale(1) rotate(-45deg)
+        -webkit-transform: scale(1) rotate(-45deg);      /* Chrome and other webkit browsers */
+        -moz-transform: scale(1) rotate(-45deg);       /* FF */
+        -o-transform: scale(1) rotate(-45deg);           /* Opera */
+        -ms-transform: scale(1) rotate(-45deg);     /* IE9 */
+        transform: scale(1) rotate(-45deg);    /* W3C compliant browsers */
     }
 
     .login-snip .sign-in:checked+.tab+.sign-up+.tab+.login-space .login {
-        transform: rotate(0)
+        -webkit-transform: rotate(0);      /* Chrome and other webkit browsers */
+        -moz-transform: rotate(0);          /* FF */
+        -o-transform: rotate(0);            /* Opera */
+        -ms-transform: rotate(0);         /* IE9 */
+        transform: rotate(0)    /* W3C compliant browsers */
     }
 
     .login-snip .sign-up:checked+.tab+.login-space .sign-up-form {
-        transform: rotate(0)
+        -webkit-transform: rotate(0);      /* Chrome and other webkit browsers */
+        -moz-transform: rotate(0);          /* FF */
+        -o-transform: rotate(0);            /* Opera */
+        -ms-transform: rotate(0);         /* IE9 */
+        transform: rotate(0)    /* W3C compliant browsers */
     }
 }
 
