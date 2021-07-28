@@ -70,17 +70,6 @@ jobs:
         ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
       run: |
         python manage.py test
-    - name: Create SSH key
-      run: |
-        mkdir -p ~/.ssh/
-        echo "$SSH_PRIVATE_KEY" > ../private.key
-        sudo chmod 600 ../private.key
-        echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-      shell: bash
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
-        SSH_KEY_PATH: ${{ github.workspace }}/../private.key
     - name: AWS SSM Send Command
       uses: peterkimzz/aws-ssm-send-command@master
       id: ssm
@@ -91,7 +80,4 @@ jobs:
         instance-ids: ${{ secrets.INSTANCE_ID  }}
         comment: Deploy the main branch
         working-directory: ${{ secrets.PROJECT_DIR }}
-        command: /bin/sh ./deploy.sh
-    # Catch SSM outputs
-    - name: Get the outputs
-      run: printenv
+        command: ../deploy.sh
