@@ -71,7 +71,8 @@ jobs:
       run: |
         python manage.py test
     - name: AWS SSM Send Command
-      uses: peterkimzz/aws-ssm-send-command@1.0.1
+      uses: peterkimzz/aws-ssm-send-command@master
+      id: ssm
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -80,3 +81,6 @@ jobs:
         comment: Deploy the main branch
         working-directory: ${{ secrets.PROJECT_DIR }}
         command: /bin/sh ./deploy.sh
+    # Catch SSM outputs
+    - name: Get the outputs
+      run: echo "The Command id is ${{ steps.ssm.outputs.command-id }}"
