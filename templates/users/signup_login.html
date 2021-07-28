@@ -24,18 +24,25 @@
             <div class="card">
                 <div class="login-box">
                     <div class="login-snip">
-                        {% if 'login' in request.get_full_path %}
-                            <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
-                        {% else %}
+                        {% if error_in_signup %}
                             <input id="tab-1" type="radio" name="tab" class="sign-in">
-                        {% endif %}
-                        <label for="tab-1" class="tab">Login</label>
-                        {% if 'login' in request.get_full_path %}
-                            <input id="tab-2" type="radio" name="tab" class="sign-up">
-                        {% else %}
+                            <label for="tab-1" class="tab">Login</label>
                             <input id="tab-2" type="radio" name="tab" class="sign-up" checked>
+                            <label for="tab-2" class="tab">Sign Up</label>
+                        {% else %}
+                            {% if 'login' in request.get_full_path %}
+                                <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
+                            {% else %}
+                                <input id="tab-1" type="radio" name="tab" class="sign-in">
+                            {% endif %}
+                            <label for="tab-1" class="tab">Login</label>
+                            {% if 'login' in request.get_full_path %}
+                                <input id="tab-2" type="radio" name="tab" class="sign-up">
+                            {% else %}
+                                <input id="tab-2" type="radio" name="tab" class="sign-up" checked>
+                            {% endif %}
+                            <label for="tab-2" class="tab">Sign Up</label>
                         {% endif %}
-                        <label for="tab-2" class="tab">Sign Up</label>
                         <div class="login-space">
                             <div class="login">
                                 <form method="post">
@@ -52,6 +59,7 @@
                                             {% if 'success' in message.tags %}
                                                 <h5 style="color: lawngreen">{{ message }}</h5>
                                             {% endif %}
+                                                <h5 style="color: red">{{ message }}</h5>
                                         {% endfor %}
                                     {% endif %}
                                     <div class="group">
@@ -78,14 +86,13 @@
                                                 <h6 style="color: red">{{ error }}</h6>
                                             {% endfor %}
                                         </div>
-                                    {% endif %}
-
-                                    {% for field in signup_form %}
-                                        {% for error in field.errors %}
-                                            <h6 style="color: red">{{ error }}</h6>
+                                    {% else %}
+                                        {% for field in signup_form %}
+                                            {% for error in field.errors %}
+                                                <h6 style="color: red">{{ error }}</h6>
+                                            {% endfor %}
                                         {% endfor %}
-                                    {% endfor %}
-
+                                    {% endif %}
                                     <div class="group">
                                         <label for="id_email" class="label">Email Address</label>
                                         <input type="email" name="email" class="input" maxlength="100" autofocus="" required="" id="id_email" placeholder="Enter your email address">

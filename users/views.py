@@ -38,9 +38,9 @@ def signup_login_handler(request):
                         login(request, user)
                         messages.info(request, f"You are now logged in as {email}.")
                         return HttpResponseRedirect(reverse_lazy('home'))
-                    # else:
-                    #     messages.error(request, "Invalid login details given.")
-                    #     return HttpResponseRedirect(reverse_lazy('login'))
+                    else:
+                        messages.error(request, "Invalid login details given.")
+                        return HttpResponseRedirect(reverse_lazy('login'))
                 else:
                     messages.error(request, "Invalid login details given.")
                     return HttpResponseRedirect(reverse_lazy('login'))
@@ -51,6 +51,12 @@ def signup_login_handler(request):
                     user = signup_form.save()
                     messages.success(request, f'Account created for {user.email}.\n Now, you can login!')
                     return HttpResponseRedirect(reverse_lazy('login'))
+                else:
+                    return render(request, 'users/signup_login.html', {
+                        'signup_form': signup_form,
+                        'login_form': login_form,
+                        'error_in_signup': True
+                    })
 
         else:
             signup_form = CustomUserCreationForm()
