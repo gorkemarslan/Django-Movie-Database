@@ -72,7 +72,7 @@ jobs:
         python manage.py test
     - name: Create SSH key
       run: |
-        mkdir -p ~/.ssh/github-actions-ssh
+        mkdir -p ~/.ssh/
         echo "$SSH_PRIVATE_KEY" > ../private.key
         sudo chmod 600 ../private.key
         echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
@@ -94,4 +94,4 @@ jobs:
         command: /bin/sh ./deploy.sh
     # Catch SSM outputs
     - name: Get the outputs
-      run: echo "The Command id is ${{ steps.ssm.outputs.command-id }}"
+      run: printenv
