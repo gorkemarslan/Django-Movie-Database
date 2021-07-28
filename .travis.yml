@@ -27,3 +27,28 @@ script:
   - python manage.py migrate
   - python manage.py makemigrations
   - python manage.py test && flake8
+  - zip -r latest *
+  - mkdir -p deploy_cd_upload
+  - mv latest.zip deploy_cd_upload/latest.zip
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    local_dir: deploy_cd_upload
+    skip_cleanup: true
+    on:
+      &2
+      repo: organization/$REPO_NAME
+    bucket: $S3_BUCKET_NAME
+    region: $S3_REGION_NAME
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: $S3_BUCKET_NAME
+    key: latest.zip
+    bundle_type: zip
+    application: $CODE_DEPLOY_APP_NAME
+    deployment_group: $CODE_DEPLOY_GROUP_NAME
+    region: $DEPLOY_REGION_NAME
+    on: *2
