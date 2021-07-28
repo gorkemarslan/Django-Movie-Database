@@ -38,16 +38,35 @@ a:active {
   color: black;
 }
 
-.navbar-brand{
-    position: absolute;
-    top: 10px;
+@media only screen and (min-width: 768px) {
+    .navbar-brand{
+        position: absolute;
+        top: 10px;
+    }
 }
-.navbar-home{
-    margin-left:100px
+
+@media only screen and (min-width: 768px) {
+    .navbar-home{
+        margin-left:100px
+    }
 }
-.nav-sep{
-  border-right: 1px solid rgba(255,255,255,.3);
-  margin-right: 10px;
+
+@media only screen and (min-width: 768px) {
+    .nav-sep{
+        border-right: 1px solid rgba(255,255,255,.3);
+        margin-right: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-signup-btn{
+        margin-left: 0 !important;
+        margin-top: 15px !important;
+    }
+
+    .navbar .navbar-collapse {
+        text-align: center;
+    }
 }
 
 .navbar-signup-btn{

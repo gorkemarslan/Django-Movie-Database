@@ -4,14 +4,17 @@
 {% endblock statichead %}
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-  <div class="container">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="collapse navbar-collapse" id="mainMenu">
+      <span class="d-none d-sm-block">
+      <a class="navbar-brand navbar-left" href="{% url 'home' %}">
+        <img src="{% static 'movies/images/movie-it-logo.png' %}" width="80" height="80" alt="">
+      </a>
+      </span>
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="navbar-brand navbar-left" href="{% url 'home' %}">
-            <img src="{% static 'movies/images/movie-it-logo.png' %}" width="80" height="80" alt="">
-          </a>
-        </li>
         <li class="nav-item navbar-home">
           <a class="nav-link" href="{% url 'home' %}">Home</a>
         </li>
@@ -20,9 +23,6 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
         {% if user.is_authenticated %}
         <li class="nav-item nav-sep">
           <a class="nav-link" href="{% url 'recommendation' %}">Recommendation</a>
@@ -40,10 +40,12 @@
           </div>
         </li>
         {% else %}
-        <form class="form-inline ml-auto">
+        <li>
           <a href="{% url 'login' %}" class="btn btn-light navbar-login-btn">Log in</a>
-          <a href="{% url 'signup' %}" class="btn btn-success ml-2 navbar-signup-btn">Sign up</a>
-        </form>
+        </li>
+        <li>
+           <a href="{% url 'signup' %}" class="btn btn-success ml-2 navbar-signup-btn">Sign up</a>
+        </li>
         {% endif %}
 
       </ul>
