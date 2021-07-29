@@ -73,14 +73,14 @@ jobs:
       needs: deploy
       runs-on: ubuntu-latest
         steps:
-      - name: AWS SSM Send Command
-        uses: peterkimzz/aws-ssm-send-command@master
-        id: ssm
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION_NAME }}
-          instance-ids: ${{ secrets.INSTANCE_ID  }}
-          comment: Deploy the main branch
-          working-directory: ${{ secrets.PROJECT_DIR }}
-          command: ../deploy.sh
+        - name: AWS SSM Send Command
+          uses: peterkimzz/aws-ssm-send-command@master
+          id: ssm
+          with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ secrets.AWS_REGION_NAME }}
+            instance-ids: ${{ secrets.INSTANCE_ID  }}
+            comment: Deploy the main branch
+            working-directory: ${{ secrets.PROJECT_DIR }}
+            command: ../deploy.sh
