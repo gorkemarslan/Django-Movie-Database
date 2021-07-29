@@ -47,6 +47,8 @@ jobs:
         POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+      run: |
+        echo "Environment Variables"
       
   test:
     needs: build
