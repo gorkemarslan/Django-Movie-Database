@@ -1,19 +1,22 @@
 from django.urls import reverse_lazy
 from django.views import generic
-from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from .forms import CustomUserCreationForm, CustomAuthenticationForm
 
 
-class AccountPageView(generic.TemplateView):
+class AccountPageView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'users/account.html'
+    login_url = '/login/'
+    redirect_field_name = 'home'
 
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect('/')
-        return super(AccountPageView, self).dispatch(request, *args, **kwargs)
+    # def dispatch(self, request, *args, **kwargs):
+    #     if not request.user.is_authenticated:
+    #         return HttpResponseRedirect('/')
+    #     return super(AccountPageView, self).dispatch(request, *args, **kwargs)
 
 
 def signup_login_handler(request):
