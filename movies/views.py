@@ -1,9 +1,7 @@
 import requests
 from django.conf import settings
 from django.http import JsonResponse
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic import TemplateView
+from django.views import generic
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import InvalidPage
@@ -13,21 +11,29 @@ from .recommendation import recommender
 from .models import Movie, UserRating
 
 
-class HomePageView(TemplateView):
+class HomePageView(generic.TemplateView):
     template_name = 'movies/home.html'
 
 
-class MovieListView(ListView):
+class MovieListView(generic.ListView):
     model = Movie
     paginate_by = 10
     context_object_name = 'movie_list'
     template_name = 'movies/movie_list.html'
 
     def post(self, *args, **kwargs):
+        """
+        HTTP post method to give star ratings to a movie in the movie list.
+        """
         return post_star_rating(self, *args, **kwargs)
 
     def paginate_queryset(self, queryset, page_size):
-        """Paginate the queryset, if needed."""
+        """
+        The method itself is overriden by the following customizations:
+            * float page numbers are converted to int.
+            * If a page number is less or equal to 0, then returns the first page.
+            * If a page is greater than the last page, then returns the last page.
+        """
         paginator = self.get_paginator(
             queryset, page_size, orphans=self.get_paginate_orphans(),
             allow_empty_first_page=self.get_allow_empty())
@@ -57,7 +63,7 @@ class MovieListView(ListView):
             })
 
 
-class MovieDetailView(DetailView):
+class MovieDetailView(generic.DetailView):
     model = Movie
     context_object_name = 'movie'
     template_name = 'movies/movie_detail.html'
@@ -80,7 +86,7 @@ class MovieDetailView(DetailView):
         return context
 
 
-class MovieRecommendationView(TemplateView):
+class MovieRecommendationView(generic.TemplateView):
 
     template_name = "movies/movie_recommendation.html"
 
@@ -99,7 +105,7 @@ class MovieRecommendationView(TemplateView):
         return context
 
 
-class UserStarsListView(ListView):
+class UserStarsListView(generic.ListView):
     paginate_by = 50
     context_object_name = 'user_stars_list'
     template_name = 'movies/user_stars_list.html'
