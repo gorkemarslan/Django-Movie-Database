@@ -31,16 +31,19 @@ def signup_login_handler(request):
         if request.method == 'POST':
             signup_form = CustomUserCreationForm()
             login_form = CustomAuthenticationForm()
+            # If login form is submitted.
             if request.POST.get('login'):
                 login_form = CustomAuthenticationForm(request, data=request.POST)
                 if login_form.is_valid():
                     email = login_form.cleaned_data.get('username')
                     password = login_form.cleaned_data.get('password')
                     user = authenticate(username=email, password=password)
+                    # If user credentials are correct, then login
                     if user:
                         login(request, user)
                         messages.info(request, f"You are now logged in as {email}.")
                         return HttpResponseRedirect(reverse_lazy('home'))
+                    # If not, display message error in the template and redirect login page.
                     else:
                         messages.error(request, "Invalid login details given.")
                         return HttpResponseRedirect(reverse_lazy('login'))
@@ -48,6 +51,7 @@ def signup_login_handler(request):
                     messages.error(request, "Invalid login details given.")
                     return HttpResponseRedirect(reverse_lazy('login'))
 
+            # If signup form is submitted.
             elif request.POST.get('signup'):
                 signup_form = CustomUserCreationForm(request.POST)
                 if signup_form.is_valid():
