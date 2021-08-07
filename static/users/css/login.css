@@ -5,15 +5,25 @@ body {
     font: 600 16px/18px 'Open Sans', sans-serif
 }
 
+input{
+    outline: none;
+}
+
 .login-box {
     width: 100%;
     margin: auto;
     max-width: 525px;
     min-height: 870px;
     position: relative;
+    /*
     background: url(https://images.unsplash.com/photo-1478479405421-ce83c92fb3ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80) no-repeat center;
-
+    */
+    background: rgba(200, 200, 200, 1)
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19)
+    -webkit-transition: background-image 5s;
+    -moz-transition: background-image 5s;
+    -o-transition: background-image 5s;
+    transition: background-image 5s;
 }
 
 .login-snip {
