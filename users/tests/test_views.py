@@ -168,3 +168,20 @@ class AccountPageTests(TestCase):
         response = self.client.get(self.url)
         self.assertRedirects(response, expected_url='/login/?redirect_to=/account/',
                              status_code=302, target_status_code=200)
+
+
+class PasswordChangeAndDonePagesTests(TestCase):
+
+    def setUp(self) -> None:
+        data = {'email': 'testuser@test.com',
+                'date_of_birth': "1990-01-01",
+                'country': 'TR',
+                'gender': 'X',
+                'password': 'superpass123?*'}
+        User = get_user_model()
+        User.objects.create_user(**data)
+        self.client.login(email=data.get('email'), password=data.get('password'))
+
+    def test_html_form_class(self):
+        response = self.client.get(reverse('password_change'))
+        self.assertContains(response, "form-control")

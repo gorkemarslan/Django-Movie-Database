@@ -1,11 +1,12 @@
 from django.urls import reverse_lazy
 from django.views import generic
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-from .forms import CustomUserCreationForm, CustomAuthenticationForm, CustomUserUpdateForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm, CustomUserUpdateForm, CustomPasswordChangeForm
 
 
 class AccountPageView(LoginRequiredMixin, generic.UpdateView):
@@ -20,6 +21,17 @@ class AccountPageView(LoginRequiredMixin, generic.UpdateView):
 
     def get_object(self, **kwargs):
         return self.request.user
+
+
+class CustomPasswordChangeView(PasswordChangeView):
+    form_class = CustomPasswordChangeForm
+    success_url = reverse_lazy('password_change_done')
+    template_name = 'users/password_change.html'
+
+
+class CustomPasswordChangeDoneView(PasswordChangeDoneView):
+    form_class = CustomPasswordChangeForm
+    template_name = 'users/password_change_done.html'
 
 
 def signup_login_handler(request):
