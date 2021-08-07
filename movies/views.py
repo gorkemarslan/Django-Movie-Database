@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.views import generic
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 from .recommendation import recommender
 from .models import Movie, UserRating
 from .paginations import custom_paginate_queryset
@@ -15,9 +16,9 @@ class HomePageView(generic.TemplateView):
 
 class MovieListView(generic.ListView):
     model = Movie
-    paginate_by = 10
     context_object_name = 'movie_list'
     template_name = 'movies/movie_list.html'
+    paginate_by = 10
 
     def post(self, *args, **kwargs):
         """
@@ -72,9 +73,9 @@ class MovieRecommendationView(generic.TemplateView):
 
 
 class UserStarsListView(generic.ListView):
-    paginate_by = 50
     context_object_name = 'user_stars_list'
     template_name = 'movies/user_stars_list.html'
+    paginate_by = 50
 
     def post(self, *args, **kwargs):
         return post_star_rating(self, *args, **kwargs)
@@ -85,6 +86,25 @@ class UserStarsListView(generic.ListView):
         user -> user_rating -> movie
         """
         return Movie.objects.filter(user_rating__user=self.request.user)
+
+    def paginate_queryset(self, queryset, page_size):
+        return custom_paginate_queryset(self, queryset, page_size)
+
+
+class SearchResultsListView(generic.ListView):
+    context_object_name = 'search_movie_list'
+    template_name = 'movies/search_results.html'
+    paginate_by = 50
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Movie.objects.filter(Q(title__icontains=query))
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchResultsListView, self).get_context_data(**kwargs)
+        query = self.request.GET.get('q')
+        context['query'] = query
+        return context
 
     def paginate_queryset(self, queryset, page_size):
         return custom_paginate_queryset(self, queryset, page_size)

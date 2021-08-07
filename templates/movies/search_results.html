@@ -1,0 +1,57 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}Search{% endblock title %}
+
+{% block content %}
+<div class="container">
+      <ol class="breadcrumb my-4">
+        <li class="breadcrumb-item active">
+            <h2>Search: {{ query }}</h2>
+        </li>
+      </ol>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr align="center">
+            <th>Title</th>
+            <th>Year</th>
+            <th>Genre</th>
+            <th>Avg. Rating (Total)</th>
+             {% if user.is_authenticated %}
+                <th>Rate it!</th>
+             {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for movie in search_movie_list %}
+            <tr>
+              <td><a href="{{ movie.get_absolute_url }}">{{ movie.title }}</a></td>
+              <td align="center">{{ movie.year }}</td>
+              <td align="center">
+                  {% for genre in movie.genre.all %}
+                    {% if forloop.last %}
+                        <a href="#">{{ genre }}</a>
+                    {% else %}
+                         <a href="#">{{ genre }}</a>,
+                    {% endif %}
+                  {% endfor %}
+              </td>
+              <td align="center">
+                  <div class="id{{ movie.movie_id }}">
+                    <span class="rating-average">{{ movie.get_average_rating }}</span>
+                    <span class="rating-count">({{ movie.user_rating.count }})</span>
+                  </div>
+              </td>
+              {% if user.is_authenticated %}
+              <td nowrap="nowrap">
+                {% include 'movies/star_rating.html' %}
+              </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <br>
+    {% include "movies/pagination.html" %}
+{% endblock content %}

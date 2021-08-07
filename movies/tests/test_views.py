@@ -144,3 +144,22 @@ class PaginationTests(TestCase):
         page = self.url + '-1'
         self.response = self.client.get(page)
         self.assertEqual(self.response.status_code, 200)
+
+
+class SearchingMovieTests(TestCase):
+    def setUp(self):
+        self.search_url = reverse('search')
+        self.query = '?q=' + "toy"
+        self.url = self.search_url + self.query
+        genre = Genre.objects.create(genre='Animation')
+        movie = Movie.objects.create(title='Toy Story', year=1995, imdb_rating=8.3)
+        movie.genre.add(genre)
+
+    def test_search_result_is_correct_for_correct_words(self):
+        response = self.client.get(self.url)
+        self.assertContains(response, "Toy Story")
+
+    def test_search_result_is_correct_for_wrong_words(self):
+        url = self.search_url + '?q=' + "abc"
+        response = self.client.get(url)
+        self.assertNotContains(response, "Toy Story")

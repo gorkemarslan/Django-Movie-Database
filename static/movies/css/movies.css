@@ -98,3 +98,12 @@ github-icon.{
     margin-right: 100px;
     margin-top: 50px;
 }
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+.form-control::placeholder {
+  font-size: 1rem;
+  color: #aaa;
+}

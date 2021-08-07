@@ -22,6 +22,27 @@
           <a class="nav-link" href="{% url 'movie_list' %}">Movies</a>
         </li>
       </ul>
+      <div class="navbar-nav mr-auto ml-auto">
+        <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="get">
+          <div class="p-1 bg-light rounded rounded-pill shadow-sm">
+            <div class="input-group">
+              <input name="q"
+                     type="search"
+                     placeholder="Search Movie"
+                     aria-describedby="button-addon1"
+                     class="form-control border-0 bg-light ml-sm-2 mt-sm-1 form-control-sm">
+              <div class="input-group-append">
+                <button id="button-addon1"
+                        type="submit"
+                        class="btn btn-link text-dark">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
       <ul class="navbar-nav ml-auto">
         {% if user.is_authenticated %}
         <li class="nav-item nav-sep">
