@@ -5,18 +5,21 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from .forms import CustomUserCreationForm, CustomAuthenticationForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm, CustomUserUpdateForm
 
 
-class AccountPageView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'users/account.html'
+class AccountPageView(LoginRequiredMixin, generic.UpdateView):
+    # LoginRequiredMixin
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     if not request.user.is_authenticated:
-    #         return HttpResponseRedirect('/')
-    #     return super(AccountPageView, self).dispatch(request, *args, **kwargs)
+    # UpdateView
+    template_name = 'users/account.html'
+    form_class = CustomUserUpdateForm
+    success_url = reverse_lazy('account')
+
+    def get_object(self, **kwargs):
+        return self.request.user
 
 
 def signup_login_handler(request):

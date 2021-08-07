@@ -18,5 +18,13 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ('email', 'gender', 'country')
 
 
+class CustomUserUpdateForm(forms.ModelForm):
+    date_of_birth = forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = CustomUser
+        fields = ('date_of_birth', 'gender', 'country')
+
+
 class CustomAuthenticationForm(AuthenticationForm):
     pass
