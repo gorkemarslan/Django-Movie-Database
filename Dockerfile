@@ -13,6 +13,6 @@ ADD requirements.txt /code/
 # Install requirements
 RUN pip install --upgrade pip
 RUN pip install -r /code/requirements.txt
-RUN pip install coverage flake8
+RUN pip install coverage flake8 pre-commit
 # Copy project
 COPY . /code/
