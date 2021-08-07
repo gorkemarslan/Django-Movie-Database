@@ -11,7 +11,7 @@ from .forms import CustomUserCreationForm, CustomAuthenticationForm
 class AccountPageView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'users/account.html'
     login_url = '/login/'
-    redirect_field_name = 'home'
+    redirect_field_name = 'redirect_to'
 
     # def dispatch(self, request, *args, **kwargs):
     #     if not request.user.is_authenticated:

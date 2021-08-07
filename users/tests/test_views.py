@@ -163,7 +163,8 @@ class AccountPageTests(TestCase):
         self.assertContains(response, 'My Account')
         self.assertTemplateUsed(response, 'users/account.html')
 
-    def test_account_page_unauthenticated_users_redirecting_to_home(self):
+    def test_account_page_unauthenticated_users_redirecting_to_login_page(self):
         self.client.logout()
         response = self.client.get(self.url)
-        self.assertRedirects(response, expected_url=reverse('home'), status_code=302, target_status_code=200)
+        self.assertRedirects(response, expected_url='/login/?redirect_to=/account/',
+                             status_code=302, target_status_code=200)
