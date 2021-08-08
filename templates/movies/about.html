@@ -1,0 +1,62 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}About{% endblock title %}
+
+{% block content %}
+<div class="mr-2 ml-2 center-block">
+    <br>
+    <h1 class="text-center">The Django Movie Database Project</h1>
+    <br><br>
+    <h3>Motivation</h3>
+    <div>
+        <p>The aim of the project is to recommend movies based on movie ratings of a user.</p>
+        <p>
+            All visitors are able to look at the movie list, their average and total ratings.
+            After a user logins, the user is able to start rating movies. Then, the recommended movies are available
+            for the user.
+        </p>
+    </div>
+    <br><br>
+    <h3>Backend</h3>
+    <br>
+    <p>
+        The project is powered by Django and, of course, Python.
+        The project is dockerized and deployed on AWS EC2 (Amazon Elastic Computing Cloud)
+        There are two applications in the project: movies and users.
+        Users application is created to customize user schema with date of birth, gender and country.
+        Movies application is created for movies schema.
+    </p>
+    <p>
+        PostgreSQL is used for database. The database is deployed on AWS RDS (Amazon Relational Database Service).
+    </p>
+    <p>
+        Class Based View is mainly preferred over Function Based View in the project.
+    </p>
+    <p>
+        To get movie details, a third party API is used:
+        <a href="https://www.omdbapi.com/"
+           target="_blank"
+           rel="noopener noreferrer"
+        >
+            <span style="font-weight: bold">OMDb API</span>
+        </a>
+    </p>
+    <br><br>
+    <h3>Frontend</h3>
+    <br>
+    <p>In the frontend JavaScript, JQuery, Bootstrap, CSS and HTML is used.</p>
+    <br><br>
+    <h3>Code</h3>
+    <br>
+    The code can be found on
+    <a
+        href="https://github.com/gorkemarslan/Django-Movie-Database"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        <span style="font-weight: bold">Github</span>
+    </a>
+    <br><br><br><br>
+</div>
+{% endblock content %}

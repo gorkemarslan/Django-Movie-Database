@@ -14,6 +14,10 @@ class HomePageView(generic.TemplateView):
     template_name = 'movies/home.html'
 
 
+class AboutPageView(generic.TemplateView):
+    template_name = 'movies/about.html'
+
+
 class MovieListView(generic.ListView):
     model = Movie
     context_object_name = 'movie_list'
