@@ -2,7 +2,9 @@
 
 # Django-Movie-Database
 
-**About**
+# Django-Movie-Database
+
+## About
 
 > You rate, we recommend!
 
@@ -19,7 +21,8 @@ Two separate data files are responsible for launching the project.
  - `movie_data.csv` includes movie titles and genres
  - `ratings.csv` includes dataset of users and their ratings (1-5) for movies.
 
-**Getting Started**
+## Getting Started
+
 You need to have [Docker](https://www.docker.com/) on your machine to work with this project.
 
 Then, you are able to build docker files with these commands:
