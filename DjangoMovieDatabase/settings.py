@@ -143,7 +143,7 @@ STATIC_URL = '/static/'
 if DEBUG:
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
@@ -183,3 +183,6 @@ LOGOUT_REDIRECT_URL = 'home'
 
 # OMDb API
 OMDB_API_KEY = env('OMDB_API_KEY')
+
+print(BASE_DIR)
+print(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
