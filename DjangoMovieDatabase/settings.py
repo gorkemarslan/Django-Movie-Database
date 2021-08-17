@@ -166,8 +166,8 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
+    # SESSION_COOKIE_SECURE = True
+    # CSRF_COOKIE_SECURE = True
 
 # Admin Page
 ADMIN_PAGE = env('ADMIN_PAGE', default='admin/')
@@ -185,6 +185,3 @@ LOGOUT_REDIRECT_URL = 'home'
 
 # OMDb API
 OMDB_API_KEY = env('OMDB_API_KEY')
-
-print(BASE_DIR)
-print(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
