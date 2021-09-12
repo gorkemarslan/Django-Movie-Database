@@ -170,7 +170,7 @@ if not DEBUG:
     # CSRF_COOKIE_SECURE = True
 
 # Admin Page
-ADMIN_PAGE = env('ADMIN_PAGE', default='admin/')
+ADMIN_PAGE = env('ADMIN_PAGE', default='admin/').strip()
 if not ADMIN_PAGE.endswith('/'):
     ADMIN_PAGE = f'{ADMIN_PAGE}/'
 
