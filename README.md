@@ -26,7 +26,7 @@ You need to have [Docker](https://www.docker.com/) on your machine to work with 
 
 Then, you are able to build docker files with these commands:
 
-    $ docker build 
+    $ docker build .
     $ docker-compose up -d --build
 
 If everything's fine, then you're ready to make migrations:
